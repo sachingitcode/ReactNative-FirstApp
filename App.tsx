@@ -9,11 +9,13 @@ import {
 import HomePage from "./project/HomePage";
 import WelcomeScreens from "./project/screens/WelcomeScreens";
 import Lists from "./project/Pages/Lists";
+import Page1 from "./learn_native/Page1";
+import StartTodo from "./project/Pages/ToDoApp/StartTodo";
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <Lists />
+      <StartTodo />
     </SafeAreaView>
   );
 }

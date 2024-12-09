@@ -71,11 +71,33 @@ const ToDoScreen = () => {
   };
 
   /* Edit a Task */
+  // const editTask = (task: Task) => {console.log(task) };
   const editTask = (task: Task) => {
-    
+    setEditingTask(task);
+    setTaskInput(task.title);
+    setVisible(true);
   };
+
   /* Save Edit Task */
+  const saveEdit = () => {
+    if (editingTask) {
+      const updatedTasks = tasks.map((task) =>
+        task.id === editingTask.id ? { ...task, title: taskInput } : task
+      );
+      saveTasks(updatedTasks);
+      setEditingTask(null);
+      setTaskInput("");
+      setVisible(false);
+    }
+  };
+
   /* Toggle task completion */
+  const toggleCompletion = (id: string) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    saveTasks(updatedTasks);
+  };
   /* **** */
 
   return (
@@ -89,12 +111,41 @@ const ToDoScreen = () => {
           onChangeText={setTaskInput}
         />
 
+        {editingTask ? (
+          <Button mode="contained" onPress={saveEdit}>
+            Save
+          </Button>
+        ) : (
+          <Button mode="contained" onPress={addTask}>
+            Add Task
+          </Button>
+        )}
+
         <TaskList
           tasks={tasks}
           onDelete={deleteTask}
           onEdit={editTask}
           onToggleCompletion={toggleCompletion}
         />
+
+        {/* Modal for Editing */}
+        <Portal>
+          <Modal
+            visible={visible}
+            onDismiss={() => setVisible(false)}
+            contentContainerStyle={styles.modal}
+          >
+            <Text>Edit Task</Text>
+            <TextInput
+              style={styles.input}
+              value={taskInput}
+              onChangeText={setTaskInput}
+            />
+            <Button mode="contained" onPress={saveEdit}>
+              Save
+            </Button>
+          </Modal>
+        </Portal>
       </View>
     </Provider>
   );

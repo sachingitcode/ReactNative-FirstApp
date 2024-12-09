@@ -1,7 +1,8 @@
 import React from "react";
 import { Provider as PaperProvider } from "react-native-paper";
+import ToDoScreen from "./ToDoScreen";
 
-const App = () => {
+const StartTodo = () => {
   return (
     <PaperProvider>
       <ToDoScreen />
@@ -9,4 +10,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default StartTodo;
